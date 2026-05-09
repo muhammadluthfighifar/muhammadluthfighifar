@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Pendaftaran Mahasiswa Baru | UTS Pemrograman Web II</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #eef2f7;
+            margin: 0;
+            padding: 24px 20px;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        /* Header kampus */
+        .univ-header {
+            background: white;
+            border-radius: 28px;
+            padding: 20px 28px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border-left: 8px solid #1e466e;
+        }
+
+        .univ-header h3 {
+            margin: 0 0 6px 0;
+            font-weight: 600;
+            color: #1a3e5c;
+            letter-spacing: 1px;
+        }
+
+        .univ-header h2 {
+            margin: 0;
+            font-weight: 700;
+            color: #0b2b44;
+            font-size: 1.7rem;
+        }
+
+        .univ-header p {
+            margin: 8px 0 0;
+            color: #2c5a7a;
+            font-size: 0.9rem;
+        }
+
+        .judul-uts {
+            background: #ffffffd9;
+            border-radius: 20px;
+            padding: 12px 24px;
+            margin-bottom: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .judul-uts h1 {
+            margin: 0;
+            font-size: 1.7rem;
+            color: #1a4b76;
+        }
+
+        .info-mk {
+            background: #e9edf2;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* form card */
+        .form-card {
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+            padding: 24px 28px;
+            margin-bottom: 36px;
+            transition: all 0.2s;
+        }
+
+        .form-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1f3e5c;
+            border-left: 6px solid #f9a826;
+            padding-left: 18px;
+            margin: 0 0 10px 0;
+        }
+
+        .subtitle {
+            color: #4a627a;
+            margin-bottom: 28px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 12px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px 30px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            color: #1f3e5c;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+        }
+
+        .input-group input, .input-group select {
+            padding: 12px 14px;
+            border: 1.5px solid #cfdfed;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            background: #fefefe;
+            transition: 0.2s;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: #f9a826;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(249,168,38,0.2);
+        }
+
+        .kode-hint {
+            font-size: 0.7rem;
+            color: #6c86a3;
+            margin-top: 4px;
+        }
+
+        .tombol-area {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            border-top: 1px solid #e2edf7;
+            padding-top: 24px;
+            margin-top: 8px;
+        }
+
+        button {
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            background-color: #eef2fa;
+            color: #1f4970;
+        }
+
+        button.btn-primary {
+            background: #1e6f3f;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        button.btn-primary:hover {
+            background: #145c34;
+            transform: translateY(-1px);
+        }
+
+        button.btn-danger {
+            background: #c0392b;
+            color: white;
+        }
+
+        button.btn-danger:hover {
+            background: #a82315;
+        }
+
+        button.btn-reset {
+            background: #e0e7ef;
+        }
+
+        button.btn-reset:hover {
+            background: #cbd9e6;
+        }
+
+        /* TABEL */
+        .table-wrapper {
+            background: white;
+            border-radius: 28px;
+            padding: 10px 0 20px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        .tabel-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 16px 24px 0 24px;
+            color: #143450;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            min-width: 1100px;
+        }
+
+        th {
+            background: #f1f6fd;
+            padding: 14px 8px;
+            font-weight: 700;
+            color: #1c4c7a;
+            border-bottom: 2px solid #cbdde9;
+            text-align: center;
+        }
+
+        td {
+            padding: 12px 6px;
+            border-bottom: 1px solid #e2edf7;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .btn-hapus {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 6px 14px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-hapus:hover {
+            background: #c0392b;
+            transform: scale(1.02);
+        }
+
+        .footer-stats {
+            display: flex;
+            justify-content: flex-end;
+            gap: 32px;
+            padding: 16px 24px;
+            background: #f9fbfe;
+            border-radius: 0 0 28px 28px;
+            font-weight: 600;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .stat-item {
+            background: white;
+            border-radius: 40px;
+            padding: 6px 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .lulus-badge {
+            background: #d1fae5;
+            color: #0a5c2e;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            display: inline-block;
+        }
+
+        .cadangan-badge {
+            background: #fff3cd;
+            color: #856404;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 30px;
+        }
+
+        .tidak-badge {
+            background: #ffe2df;
+            color: #b13e3e;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 30px;
+        }
+
+        .empty-row td {
+            color: #8ba0bc;
+            padding: 32px;
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .form-card, .univ-header {
+                padding: 18px;
+            }
+            .tombol-area {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Kop Universitas -->
+    <div class="univ-header">
+        <h3>YAYASAN SÂSMITA JAYA</h3>
+        <h2>UNIVERSITAS PAMULANG</h2>
+        <p>FAKULTAS ILMU KOMPUTER - TEKNIK INFORMATIKA S-1</p>
+        <p>Jl. Surya Kencana No. 1, Pamulang Barat – Tangerang Selatan, Banten</p>
+    </div>
+
+    <div class="judul-uts">
+        <h1>📋 UJIAN TENGAH SEMESTER (PRAKTIK)</h1>
+        <div class="info-mk">Pemrograman Web II | 3 SKS | Teknik Informatika</div>
+    </div>
+
+    <!-- Form Pendaftaran -->
+    <div class="form-card">
+        <div class="form-title">📝 FORMULIR PENDAFTARAN MAHASISWA BARU</div>
+        <div class="subtitle">Input data pendaftar (tanpa database) — lengkapi semua field</div>
+
+        <div class="form-grid">
+            <div class="input-group">
+                <label>KODE PENDAFTARAN *</label>
+                <input type="text" id="kodePendaftaran" placeholder="Contoh: A2-101-9" autocomplete="off">
+                <div class="kode-hint">🔹 Format: [tempat tes][gelombang]-[nomor urut]-[bulan] <br> 
+                Tempat: A=Gedung A, B=Gedung B, V=Viktor | 1 digit bulan (1-9) contoh: A2-101-9</div>
+            </div>
+            <div class="input-group">
+                <label>NAMA PENDAFTAR</label>
+                <input type="text" id="namaPendaftar" placeholder="Nama lengkap">
+            </div>
+            <div class="input-group">
+                <label>JENIS KELAMIN</label>
+                <select id="jk">
+                    <option value="L">Laki-laki</option>
+                    <option value="P">Perempuan</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>TELP / HP</label>
+                <input type="text" id="telp" placeholder="Nomor telepon">
+            </div>
+            <div class="input-group">
+                <label>ASAL SEKOLAH</label>
+                <input type="text" id="asalSekolah" placeholder="SMA / SMK ...">
+            </div>
+            <div class="input-group">
+                <label>PEKERJAAN ORANG TUA</label>
+                <input type="text" id="pekerjaanOrtu" placeholder="PNS, Wiraswasta, dll">
+            </div>
+            <div class="input-group">
+                <label>NILAI TES MATEMATIKA</label>
+                <input type="number" id="nilaiMat" step="any" min="0" max="100" placeholder="0 - 100">
+            </div>
+            <div class="input-group">
+                <label>NILAI TES BAHASA INGGRIS</label>
+                <input type="number" id="nilaiIngg" step="any" min="0" max="100" placeholder="0 - 100">
+            </div>
+            <div class="input-group">
+                <label>NILAI TES PENGETAHUAN UMUM</label>
+                <input type="number" id="nilaiUmum" step="any" min="0" max="100" placeholder="0 - 100">
+            </div>
+        </div>
+
+        <div class="tombol-area">
+            <button type="button" id="btnTambah" class="btn-primary">➕ TAMBAH PENDAFTAR</button>
+            <button type="button" id="btnResetForm" class="btn-reset">⟳ Reset Form</button>
+            <button type="button" id="btnHapusSemua" class="btn-reset">🗑 Hapus Semua Data</button>
+        </div>
+    </div>
+
+    <!-- Tabel Data Pendaftar -->
+    <div class="table-wrapper">
+        <div class="tabel-title">
+            <span>📋 DATA PENDAFTAR & HASIL SELEKSI</span>
+            <span style="font-size:0.7rem; background:#eef2fa; padding:4px 12px; border-radius:30px;">✨ Klik tombol Hapus di setiap baris untuk hapus satu per satu</span>
+        </div>
+        <div style="overflow-x: auto;">
+            <table id="tabelPendaftar">
+                <thead>
+                    <tr>
+                        <th>Kode Pendaftar</th><th>Nama Pendaftar</th><th>JK</th><th>Telp</th><th>Asal Sekolah</th>
+                        <th>Pek. Ortu</th><th>MAT</th><th>INGG</th><th>UMUM</th><th>N. RATA</th><th>KETERANGAN</th>
+                        <th style="width: 70px;">AKSI</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelBody">
+                    <tr class="empty-row"><td colspan="12">Belum ada data pendaftar. Silakan tambah data melalui form.</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer-stats" id="footerStats">
+            <span class="stat-item">📊 Jumlah Pendaftar: 0</span>
+            <span class="stat-item">✅ Lulus: 0</span>
+            <span class="stat-item">⚠️ Cadangan: 0</span>
+            <span class="stat-item">❌ Tidak Lulus: 0</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Array untuk menyimpan data pendaftar (tanpa database)
+    let dataPendaftar = [];
+
+    // Fungsi untuk menghitung rata-rata dan keterangan
+    function hitungKeterangan(mat, ingg, umum) {
+        const rata = (mat + ingg + umum) / 3;
+        let keterangan = '';
+        if (rata >= 70) keterangan = 'Lulus';
+        else if (rata >= 60 && rata < 70) keterangan = 'Cadangan';
+        else keterangan = 'Tidak Lulus';
+        return { rata: rata.toFixed(2), keterangan };
+    }
+
+    // Fungsi untuk menambah data pendaftar
+    function tambahPendaftar() {
+        // Ambil nilai
+        let kode = document.getElementById('kodePendaftaran').value.trim();
+        let nama = document.getElementById('namaPendaftar').value.trim();
+        let jk = document.getElementById('jk').value;
+        let telp = document.getElementById('telp').value.trim();
+        let asalSekolah = document.getElementById('asalSekolah').value.trim();
+        let pekerjaanOrtu = document.getElementById('pekerjaanOrtu').value.trim();
+        let nilaiMat = parseFloat(document.getElementById('nilaiMat').value);
+        let nilaiIngg = parseFloat(document.getElementById('nilaiIngg').value);
+        let nilaiUmum = parseFloat(document.getElementById('nilaiUmum').value);
+
+        // Validasi field wajib
+        if (!kode || !nama || !telp || !asalSekolah || !pekerjaanOrtu) {
+            alert("❌ Harap lengkapi semua field: Kode, Nama, Telp, Asal Sekolah, Pekerjaan Orang Tua!");
+            return;
+        }
+        if (isNaN(nilaiMat) || isNaN(nilaiIngg) || isNaN(nilaiUmum)) {
+            alert("❌ Harap isi nilai tes Matematika, Bahasa Inggris, dan Pengetahuan Umum dengan angka.");
+            return;
+        }
+        if (nilaiMat < 0 || nilaiMat > 100 || nilaiIngg < 0 || nilaiIngg > 100 || nilaiUmum < 0 || nilaiUmum > 100) {
+            alert("❌ Nilai tes harus antara 0 - 100.");
+            return;
+        }
+
+        // Validasi format kode pendaftaran (sesuai standar A/B/V + digit + - + angka + - + digit)
+        const kodeTrim = kode;
+        const kodeValid = /^[ABV][0-9]-.+?-[0-9]$/i.test(kodeTrim);
+        if (!kodeValid) {
+            const konfirmasi = confirm("⚠️ Peringatan: Format kode pendaftaran tidak sesuai standar (contoh: A2-101-9 / B1-205-5). Tetap lanjutkan?");
+            if (!konfirmasi) return;
+        }
+
+        // Hitung rata-rata dan keterangan
+        const { rata, keterangan } = hitungKeterangan(nilaiMat, nilaiIngg, nilaiUmum);
+
+        // Cek duplikat kode? opsional tapi tidak wajib, biarkan saja
+        // Objek pendaftar dengan ID unik
+        const pendaftarBaru = {
+            id: Date.now() + Math.random() * 10000,
+            kode: kode,
+            nama: nama,
+            jk: jk === 'L' ? 'Laki-laki' : 'Perempuan',
+            telp: telp,
+            asalSekolah: asalSekolah,
+            pekerjaanOrtu: pekerjaanOrtu,
+            matematika: nilaiMat,
+            inggris: nilaiIngg,
+            umum: nilaiUmum,
+            rata: parseFloat(rata),
+            keterangan: keterangan
+        };
+
+        dataPendaftar.push(pendaftarBaru);
+        renderTabel();
+        resetFormInput();
+        alert(`✅ Pendaftar "${nama}" berhasil ditambahkan!`);
+    }
+
+    // Reset semua field form
+    function resetFormInput() {
+        document.getElementById('kodePendaftaran').value = '';
+        document.getElementById('namaPendaftar').value = '';
+        document.getElementById('jk').value = 'L';
+        document.getElementById('telp').value = '';
+        document.getElementById('asalSekolah').value = '';
+        document.getElementById('pekerjaanOrtu').value = '';
+        document.getElementById('nilaiMat').value = '';
+        document.getElementById('nilaiIngg').value = '';
+        document.getElementById('nilaiUmum').value = '';
+    }
+
+    // Hapus SATU data berdasarkan ID (fitur utama yang diminta)
+    function hapusSatuData(id) {
+        const index = dataPendaftar.findIndex(item => item.id === id);
+        if (index !== -1) {
+            const namaData = dataPendaftar[index].nama;
+            if (confirm(`🗑 Yakin ingin menghapus data pendaftar "${namaData}" ?`)) {
+                dataPendaftar.splice(index, 1);
+                renderTabel();
+                alert(`✅ Data "${namaData}" berhasil dihapus.`);
+            }
+        } else {
+            alert("Data tidak ditemukan.");
+        }
+    }
+
+    // Hapus semua data sekaligus
+    function hapusSemuaData() {
+        if (dataPendaftar.length > 0 && confirm("⚠️ PERINGATAN: Yakin ingin menghapus SEMUA data pendaftar? Tindakan ini tidak dapat dibatalkan.")) {
+            dataPendaftar = [];
+            renderTabel();
+            alert("Semua data pendaftar telah dihapus.");
+        } else if (dataPendaftar.length === 0) {
+            alert("Tidak ada data untuk dihapus.");
+        }
+    }
+
+    // Render tabel lengkap + tombol hapus per baris
+    function renderTabel() {
+        const tbody = document.getElementById('tabelBody');
+        if (!tbody) return;
+
+        if (dataPendaftar.length === 0) {
+            tbody.innerHTML = `<tr class="empty-row"><td colspan="12">✨ Belum ada data pendaftar. Silakan tambah data melalui form di atas.✨</td></tr>`;
+            updateFooterStats();
+            return;
+        }
+
+        let html = '';
+        dataPendaftar.forEach(p => {
+            let badgeClass = '';
+            let badgeText = p.keterangan;
+            if (p.keterangan === 'Lulus') badgeClass = 'lulus-badge';
+            else if (p.keterangan === 'Cadangan') badgeClass = 'cadangan-badge';
+            else badgeClass = 'tidak-badge';
+
+            html += `<tr>
+                        <td style="font-weight:500;">${escapeHtml(p.kode)}</td>
+                        <td>${escapeHtml(p.nama)}</td>
+                        <td>${p.jk}</td>
+                        <td>${escapeHtml(p.telp)}</td>
+                        <td>${escapeHtml(p.asalSekolah)}</td>
+                        <td>${escapeHtml(p.pekerjaanOrtu)}</td>
+                        <td>${p.matematika}</td>
+                        <td>${p.inggris}</td>
+                        <td>${p.umum}</td>
+                        <td><strong>${p.rata}</strong></td>
+                        <td><span class="${badgeClass}">${badgeText}</span></td>
+                        <td><button class="btn-hapus" data-id="${p.id}">🗑 Hapus</button></td>
+                     </tr>`;
+        });
+        tbody.innerHTML = html;
+        
+        // Pasang event listener ke semua tombol hapus yang baru di-render
+        document.querySelectorAll('.btn-hapus').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = parseFloat(button.getAttribute('data-id'));
+                hapusSatuData(id);
+            });
+        });
+        
+        updateFooterStats();
+    }
+
+    // Update statistik jumlah pendaftar, lulus, cadangan, tidak lulus
+    function updateFooterStats() {
+        const total = dataPendaftar.length;
+        const lulus = dataPendaftar.filter(p => p.keterangan === 'Lulus').length;
+        const cadangan = dataPendaftar.filter(p => p.keterangan === 'Cadangan').length;
+        const tidakLulus = dataPendaftar.filter(p => p.keterangan === 'Tidak Lulus').length;
+
+        const footerDiv = document.getElementById('footerStats');
+        if (footerDiv) {
+            footerDiv.innerHTML = `
+                <span class="stat-item">📊 Jumlah Pendaftar: ${total}</span>
+                <span class="stat-item">✅ Lulus: ${lulus}</span>
+                <span class="stat-item">⚠️ Cadangan: ${cadangan}</span>
+                <span class="stat-item">❌ Tidak Lulus: ${tidakLulus}</span>
+            `;
+        }
+    }
+
+    // Simple XSS protection
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+
+    // INISIALISASI DATA CONTOH (agar tabel tidak kosong, namun tetap user bisa hapus satu per satu atau semua)
+    function loadContohData() {
+        if (dataPendaftar.length === 0) {
+            dataPendaftar.push({
+                id: 1001,
+                kode: "A2-101-9",
+                nama: "Anisa Rahmawati",
+                jk: "Perempuan",
+                telp: "08123456789",
+                asalSekolah: "SMA Negeri 1 Pamulang",
+                pekerjaanOrtu: "Guru",
+                matematika: 85,
+                inggris: 78,
+                umum: 80,
+                rata: 81.00,
+                keterangan: "Lulus"
+            });
+            dataPendaftar.push({
+                id: 1002,
+                kode: "B1-205-5",
+                nama: "Budi Santoso",
+                jk: "Laki-laki",
+                telp: "08234567890",
+                asalSekolah: "SMK Telkom Jakarta",
+                pekerjaanOrtu: "Wiraswasta",
+                matematika: 68,
+                inggris: 65,
+                umum: 63,
+                rata: 65.33,
+                keterangan: "Cadangan"
+            });
+            dataPendaftar.push({
+                id: 1003,
+                kode: "V3-307-7",
+                nama: "Citra Lestari",
+                jk: "Perempuan",
+                telp: "087812345678",
+                asalSekolah: "MAN 2 Tangerang",
+                pekerjaanOrtu: "Petani",
+                matematika: 45,
+                inggris: 52,
+                umum: 48,
+                rata: 48.33,
+                keterangan: "Tidak Lulus"
+            });
+            dataPendaftar.push({
+                id: 1004,
+                kode: "A1-450-3",
+                nama: "Dian Pramudya",
+                jk: "Laki-laki",
+                telp: "081398765432",
+                asalSekolah: "SMA Budi Luhur",
+                pekerjaanOrtu: "Dokter",
+                matematika: 92,
+                inggris: 88,
+                umum: 91,
+                rata: 90.33,
+                keterangan: "Lulus"
+            });
+        }
+        renderTabel();
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        const btnTambah = document.getElementById('btnTambah');
+        const btnResetForm = document.getElementById('btnResetForm');
+        const btnHapusSemua = document.getElementById('btnHapusSemua');
+
+        if (btnTambah) btnTambah.addEventListener('click', tambahPendaftar);
+        if (btnResetForm) btnResetForm.addEventListener('click', resetFormInput);
+        if (btnHapusSemua) btnHapusSemua.addEventListener('click', hapusSemuaData);
+
+        // Load contoh data agar ada sample yang bisa dihapus satu per satu
+        loadContohData();
+
+        // Optional: tambahkan event enter pada form (tidak wajib)
+        const inputs = document.querySelectorAll('#kodePendaftaran, #namaPendaftar, #telp, #asalSekolah, #pekerjaanOrtu, #nilaiMat, #nilaiIngg, #nilaiUmum');
+        inputs.forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    tambahPendaftar();
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
